@@ -1,3 +1,4 @@
 export const customColors = {
-    white: '#ffffff'
+    white: '#ffffff',
+    black: '#000000'
 };

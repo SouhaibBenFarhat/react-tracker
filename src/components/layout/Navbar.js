@@ -6,6 +6,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import {withRouter} from 'react-router-dom'
+import {logout} from "../../services/auth-service";
 
 const styles = {
     root: {
@@ -27,8 +28,14 @@ class Navbar extends Component {
     }
 
 
+    componentDidMount() {
+        this.onRouteChanged();
+    }
+
     handleLogoutClick = () => {
-        this.props.history.replace('/login')
+        logout().then(() => {
+            this.props.history.replace('/login')
+        })
     };
 
     componentDidUpdate(prevProps) {

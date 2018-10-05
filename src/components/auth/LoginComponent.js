@@ -61,7 +61,7 @@ class LoginComponent extends Component {
 
     handleSubmit = () => {
         if (this.validateForm()) {
-            login(this.state.username, this.state.password).then(() => {
+            login(this.state.username).then(() => {
                 this.props.history.replace('/')
             })
         }

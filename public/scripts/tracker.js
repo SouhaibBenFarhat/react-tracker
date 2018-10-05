@@ -1,62 +1,70 @@
-var timer = (function () {
-    const keys = {
-        CURRENT_USER: 'CURRENT_USER'
-    }
+(function () {
 
     const frequency = 1000;
+    const startDate = new Date();
     const currentScript = document.querySelector('script[script-id="trackme"]');
     const host = currentScript.getAttribute('host');
     const endpoint = currentScript.getAttribute('endpoint');
+    const containerId = currentScript.getAttribute('container-id');
     let watcher = null;
 
-    const getCurrentUser = () => {
-        const currentUser = localStorage.getItem(keys.CURRENT_USER);
-        if (currentUser === undefined || currentUser === null) {
-            window.location.href = "/login";
+    const getTimeDifference = (currentTime) => {
+        const res = Math.abs(currentTime - startDate) / 1000;
+        const days = Math.floor(res / 86400);
+        const hours = Math.floor(res / 3600) % 24;
+        const minutes = Math.floor(res / 60) % 60;
+        const seconds = res % 60;
+        return durationFormatter(minutes, seconds);
+    };
+
+
+    const durationFormatter = (minutes, seconds) => {
+        seconds = seconds.toString().substring(0, 2).replace('.', '');
+        if (minutes.length === 1) {
+            minutes = '0' + minutes + ' mins ';
         }
-    }
+        if (seconds.length === 1) {
+            seconds = '0' + seconds + ' secs';
+        }
+        if (seconds.length === 2) {
+            seconds = seconds + ' secs';
+        }
+        return minutes + ':' + seconds;
+    };
 
     const configureWatcher = () => {
         watcher = setInterval(() => {
-            console.log(endpoint + ' ' + new Date());
+            const container = document.getElementById(containerId);
+            if (window.location.pathname !== "/login") {
+                if (container) {
+                    container.innerHTML = getTimeDifference(new Date());
+                }
+                console.log(new Date())
+            }
         }, frequency)
     };
 
     const killWatcher = () => {
         clearInterval(watcher);
-    }
+    };
 
     const startTimer = () => {
-        if (window.location.pathname !== '/login') {
-            getCurrentUser();
-            configureWatcher();
-        }
-        window.addEventListener('hashchange', function (e) {
-            if (window.location.pathname !== '/login') {
-                getCurrentUser();
-                configureWatcher();
-            }
-        });
+        configureWatcher();
     };
     const endTimer = () => {
         killWatcher();
-        var result = alert("Do you want to close this tab?");
-        if (result) {
-
-        } else {
+        const result = alert("Do you want to close this tab?");
+        if (!result)
             configureWatcher();
-        }
         return false;
     };
-    return {
-        start: startTimer,
-        end: endTimer
-    }
+
+    window.onload = startTimer;
+    window.onbeforeunload = endTimer;
 })();
 
 
-window.onload = timer.start;
-window.onbeforeunload = timer.end;
+
 
 
 
