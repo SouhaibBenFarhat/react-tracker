@@ -6,6 +6,7 @@
     const host = currentScript.getAttribute('host');
     const endpoint = currentScript.getAttribute('endpoint');
     const containerId = currentScript.getAttribute('container-id');
+    let sessionHash = '';
     let watcher = null;
 
     const getTimeDifference = (currentTime) => {
@@ -16,8 +17,6 @@
         const seconds = res % 60;
         return durationFormatter(minutes, seconds);
     };
-
-
     const durationFormatter = (minutes, seconds) => {
         seconds = seconds.toString().substring(0, 2).replace('.', '');
         if (minutes.length === 1) {
@@ -31,16 +30,36 @@
         }
         return minutes + ':' + seconds;
     };
+    const append = () => {
+        const container = document.getElementById(containerId);
+        if (container) {
+            container.innerHTML = getTimeDifference(new Date());
+        }
+    };
+
+
+    const init = () => {
+        const data = {site: window.location, path: window.location.pathname};
+        $.post(host + endpoint, JSON.stringify(data))
+            .done((response) => {
+                sessionHash = response.session_hash;
+                sessionStorage.setItem('user_hash', response.user_hash);
+                configureWatcher();
+            })
+            .fail((xhr, status, error) => {
+                console.error(xhr);
+                console.error(status);
+                console.error(error);
+            });
+    };
+
 
     const configureWatcher = () => {
         watcher = setInterval(() => {
-            const container = document.getElementById(containerId);
             if (window.location.pathname !== "/login") {
-                if (container) {
-                    container.innerHTML = getTimeDifference(new Date());
-                }
-                console.log(new Date())
+                append();
             }
+            console.log(new Date());
         }, frequency)
     };
 
@@ -49,8 +68,8 @@
     };
 
     const startTimer = () => {
-        configureWatcher();
     };
+
     const endTimer = () => {
         killWatcher();
         const result = alert("Do you want to close this tab?");
@@ -61,6 +80,7 @@
 
     window.onload = startTimer;
     window.onbeforeunload = endTimer;
+    init();
 })();
 
 

@@ -7,6 +7,7 @@ import {Row, Col} from 'react-bootstrap';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import {login, logout} from "../../services/auth-service";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const styles = theme => ({
     root: {
@@ -25,8 +26,10 @@ class LoginComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: '',
-            password: '',
+            username: 'test@test.com',
+            password: 'test',
+            loading: false,
+            error: false,
             errors: {}
         }
     }
@@ -61,8 +64,13 @@ class LoginComponent extends Component {
 
     handleSubmit = () => {
         if (this.validateForm()) {
-            login(this.state.username).then(() => {
-                this.props.history.replace('/')
+            this.setState({loading: true});
+            login(this.state.username, this.state.password).then(() => {
+                this.setState({loading: false}, () => {
+                    this.props.history.replace('/');
+                });
+            }).catch(() => {
+                this.setState({loading: false, error: true});
             })
         }
     };
@@ -90,7 +98,7 @@ class LoginComponent extends Component {
                                         fullWidth={true}
                                         label="Username"
                                         margin="normal"
-                                        error={this.state.errors.usernameError !== undefined}
+                                        error={this.state.errors.usernameError !== undefined || this.state.error}
                                         onChange={this.handleUsernameChange}/>
                                 </Col>
                             </Row>
@@ -99,24 +107,31 @@ class LoginComponent extends Component {
                                     <TextField
                                         fullWidth={true}
                                         label="Password"
+                                        type="password"
                                         margin="normal"
-                                        error={this.state.errors.passwordError !== undefined}
+                                        error={this.state.errors.passwordError !== undefined || this.state.error}
                                         onChange={this.handlePasswordChange}/>
                                 </Col>
                             </Row>
-                            <Row>
-                                <Col md={12}>
-                                    <Button
-                                        variant="contained"
-                                        size="large"
-                                        color="primary"
-                                        fullWidth={true}
-                                        onClick={this.handleSubmit}
-                                        className={classes.button}>
-                                        SIGN IN
-                                    </Button>
-                                </Col>
-                            </Row>
+                            {
+                                this.state.loading
+                                    ?
+                                    <CircularProgress/>
+                                    :
+                                    <Row>
+                                        <Col md={12}>
+                                            <Button
+                                                variant="contained"
+                                                size="large"
+                                                color="primary"
+                                                fullWidth={true}
+                                                onClick={this.handleSubmit}
+                                                className={classes.button}>
+                                                SIGN IN
+                                            </Button>
+                                        </Col>
+                                    </Row>
+                            }
                         </Paper>
                     </Col>
                 </Row>
