@@ -75,12 +75,13 @@ react-tracker/
  
 ### Check list:
 
-* [ ] The time should only be tracked, if the user is actively browsing the site. If he is out of focus, in a different tab, idle or the like, the time should not be counted
-* [ ] The time tracked should be accurately and performantly send to the backend and saved in a database
-* [ ] You can use any javascript framework and/or vanilla javascript
-* [ ] The websites the users are browsing are not important. Use an existing template or create a simple web app you like
-* [ ] the javascript time tracking library should be stand alone and build in a way that anyone could add it to his application
-* [ ] The time tracked and saved should not be more than 5% off the time, the user is actually browsing the sites
-* [ ] Do not simply copy existing solutions, I know them :)
-* [ ] Do it by yourself
+* [x] The time should only be tracked, if the user is actively browsing the site. If he is out of focus, in a different tab,the time should not be counted
+* [ ] in idle state the time should not be counted,
+* [x] The time tracked should be accurately and performantly send to the backend and saved in a database
+* [x] You can use any javascript framework and/or vanilla javascript
+* [x] The websites the users are browsing are not important. Use an existing template or create a simple web app you like
+* [x] the javascript time tracking library should be stand alone and build in a way that anyone could add it to his application
+* [x] The time tracked and saved should not be more than 5% off the time, the user is actually browsing the sites
+* [x] Do not simply copy existing solutions, I know them :)
+* [x] Do it by yourself
 
