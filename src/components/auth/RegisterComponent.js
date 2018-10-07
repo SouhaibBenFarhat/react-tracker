@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import {Row, Col} from 'react-bootstrap';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import {login, logout} from "../../services/auth-service";
+import {login, logout, register} from "../../services/auth-service";
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 const styles = theme => ({
@@ -65,9 +65,9 @@ class LoginComponent extends Component {
     handleSubmit = () => {
         if (this.validateForm()) {
             this.setState({loading: true});
-            login(this.state.username, this.state.password).then(() => {
+            register(this.state.username, this.state.password).then(() => {
                 this.setState({loading: false}, () => {
-                    this.props.history.replace('/');
+                    this.props.history.replace('/login');
                 });
             }).catch(() => {
                 this.setState({loading: false, error: true});

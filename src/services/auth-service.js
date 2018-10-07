@@ -2,6 +2,21 @@ import {storageKeys} from "../utility/keys";
 import axios from "axios";
 import {urls} from "../utility/urls";
 
+
+export function register(username, password) {
+    return new Promise((resolve, reject) => {
+        axios({
+            method: 'post',
+            url: urls.register,
+            data: {username: username, password: password}
+        }).then(() => {
+            resolve();
+        }).catch((err) => {
+            reject(err);
+        })
+    })
+}
+
 export function login(username, password) {
     return new Promise((resolve, reject) => {
         axios({
@@ -30,7 +45,6 @@ export function logout() {
 export function isLoggedIn() {
     const currentUser = localStorage.getItem(storageKeys.CURRENT_USER);
     const authToken = localStorage.getItem(storageKeys.AUTH_TOKEN);
-    console.log(currentUser && authToken);
     return currentUser && authToken;
 }
 
