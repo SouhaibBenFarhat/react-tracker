@@ -33,7 +33,7 @@
 
     const append = () => {
         const container = document.getElementById(containerId);
-        if (container) {
+        if (container && document.hasFocus()) {
             container.innerHTML = getTimeDifference(new Date());
         }
     };

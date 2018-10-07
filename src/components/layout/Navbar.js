@@ -46,7 +46,7 @@ class Navbar extends Component {
 
     onRouteChanged = () => {
         const pathName = this.props.location.pathname;
-        if (pathName === '/login')
+        if (pathName === '/login' || pathName === '/register')
             this.setState({showLogoutButton: false});
         else if (!this.state.showLogoutButton)
             this.setState({showLogoutButton: true})

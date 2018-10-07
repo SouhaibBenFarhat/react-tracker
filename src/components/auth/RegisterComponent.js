@@ -75,8 +75,8 @@ class LoginComponent extends Component {
         }
     };
 
-    handleRegisterClick = () => {
-        this.props.history.push('/register')
+    handleBackClick = () => {
+        this.props.history.push('/login')
     };
 
     render() {
@@ -91,10 +91,10 @@ class LoginComponent extends Component {
                             <Typography
                                 variant="headline"
                                 component="h5">
-                                Log in.
+                                Register.
                             </Typography>
                             <Typography component="p">
-                                Please enter your credentials to log into Time Tracker.
+                                Please enter your credentials to register into Time Tracker.
                             </Typography>
                             <Row>
                                 <Col md={12}>
@@ -132,11 +132,11 @@ class LoginComponent extends Component {
                                                 <Button
                                                     variant="contained"
                                                     size="large"
-                                                    color="primary"
+                                                    color="secondary"
                                                     fullWidth={true}
                                                     onClick={this.handleSubmit}
                                                     className={classes.button}>
-                                                    SIGN IN
+                                                    REGISTER
                                                 </Button>
                                             </Col>
                                         </Row>
@@ -147,13 +147,14 @@ class LoginComponent extends Component {
                                                     size="large"
                                                     color="default"
                                                     fullWidth={true}
-                                                    onClick={this.handleRegisterClick}
+                                                    onClick={this.handleBackClick}
                                                     className={classes.button}>
-                                                    REGISTER
+                                                    Back
                                                 </Button>
                                             </Col>
                                         </Row>
                                     </div>
+
                             }
                         </Paper>
                     </Col>

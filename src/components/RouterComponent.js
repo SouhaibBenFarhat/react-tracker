@@ -2,6 +2,7 @@ import React from 'react';
 import {BrowserRouter, Route, Redirect} from 'react-router-dom'
 import Landing from './layout/LandingComponent';
 import Login from './auth/LoginComponent';
+import Register from './auth/RegisterComponent';
 import Navbar from './layout/Navbar'
 import {Grid} from 'react-bootstrap';
 import {customColors} from "../utility/colors";
@@ -23,6 +24,7 @@ const router = () => {
                         }
                     }}/>
                     <Route exact path="/login" component={Login}/>
+                    <Route exact path="/register" component={Register}/>
                 </Grid>
                 <Paper
                     style={{padding: 14, position: 'fixed', bottom: 9, left: 9}}
