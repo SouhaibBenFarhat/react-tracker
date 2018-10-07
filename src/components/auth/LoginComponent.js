@@ -67,7 +67,8 @@ class LoginComponent extends Component {
             this.setState({loading: true});
             login(this.state.username, this.state.password).then(() => {
                 this.setState({loading: false}, () => {
-                    this.props.history.replace('/');
+                    //this.props.history.replace('/');
+                    window.location.href = '/';
                 });
             }).catch(() => {
                 this.setState({loading: false, error: true});
@@ -76,7 +77,8 @@ class LoginComponent extends Component {
     };
 
     handleRegisterClick = () => {
-        this.props.history.push('/register')
+        //this.props.history.push('/register')
+        window.location.href = '/register';
     };
 
     render() {

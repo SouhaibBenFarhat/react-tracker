@@ -67,7 +67,9 @@ class LoginComponent extends Component {
             this.setState({loading: true});
             register(this.state.username, this.state.password).then(() => {
                 this.setState({loading: false}, () => {
-                    this.props.history.replace('/login');
+                    // this.props.history.replace('/login');
+                    window.location.href = '/login';
+
                 });
             }).catch(() => {
                 this.setState({loading: false, error: true});

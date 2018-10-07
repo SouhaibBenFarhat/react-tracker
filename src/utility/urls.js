@@ -3,5 +3,5 @@ export const server = 'http://localhost:' + port;
 export const urls = {
     login: server + '/auth/login',
     register: server + '/signup',
-    visits: server + '/visit'
+    visit: server + '/visit',
 };

@@ -1,22 +1,26 @@
 (function () {
 
+    //ping frequency
     const frequency = 1000;
     const startDate = new Date();
     const currentScript = document.querySelector('script[script-id="trackme"]');
-    const loginPagePath = currentScript.getAttribute('login-page-path');
-    const startAfterLogin = currentScript.getAttribute('start-after-login');
+    //get host address
     const host = currentScript.getAttribute('host');
+    // endpoint for saving timelogs
     const endpoint = currentScript.getAttribute('endpoint');
+    // container element id to display the elapsed time.
     const containerId = currentScript.getAttribute('container-id');
     let sessionHash = '';
     let watcher = null;
 
+    // get time difference between session start date and current date
     const getTimeDifference = (currentTime) => {
         const res = Math.abs(currentTime - startDate) / 1000;
         const minutes = Math.floor(res / 60) % 60;
         const seconds = res % 60;
         return durationFormatter(minutes, seconds);
     };
+
     const durationFormatter = (minutes, seconds) => {
         seconds = seconds.toString().substring(0, 2).replace('.', '');
         if (minutes.length === 1) {
@@ -31,6 +35,7 @@
         return minutes + ':' + seconds;
     };
 
+    // function for appending the elapsed time.
     const append = () => {
         const container = document.getElementById(containerId);
         if (container && document.hasFocus()) {
@@ -38,6 +43,7 @@
         }
     };
 
+    // initiation, fetch user_hash and send session initiation request.
     const init = () => {
         const user_hash = localStorage.getItem('user_hash') ? localStorage.getItem('user_hash') : null;
         const data = user_hash ?
@@ -82,16 +88,8 @@
 
     const configureWatcher = () => {
         watcher = setInterval(() => {
-            if (startAfterLogin === "true") {
-                if (window.location.pathname !== loginPagePath) {
-                    append();
-                    ping();
-                }
-            } else {
-                append();
-                ping();
-            }
-
+            append();
+            ping();
         }, frequency)
     };
 
@@ -105,10 +103,6 @@
 
     const endTimer = () => {
         killWatcher();
-        const result = alert("Do you want to close this tab?");
-        if (!result)
-            configureWatcher();
-        return false;
     };
 
     window.onload = startTimer;

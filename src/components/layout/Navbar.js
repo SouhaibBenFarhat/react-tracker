@@ -34,7 +34,8 @@ class Navbar extends Component {
 
     handleLogoutClick = () => {
         logout().then(() => {
-            this.props.history.replace('/login')
+            //this.props.history.replace('/login')
+            window.location.href = '/login';
         })
     };
 

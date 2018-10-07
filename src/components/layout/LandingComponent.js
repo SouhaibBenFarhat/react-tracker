@@ -8,7 +8,7 @@ const LandingComponent = () => {
         <div>
             <Row>
                 <Col md={6} mdOffset={3} style={{textAlign: 'center'}}>
-                    <h1 style={{color: customColors.white}}>LANDING</h1>
+                    <h1 style={{color: customColors.white}}>OVERVIEW</h1>
                 </Col>
             </Row>
         </div>
