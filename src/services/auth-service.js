@@ -22,7 +22,15 @@ export function login(username, password) {
 export function logout() {
     return new Promise((resolve) => {
         localStorage.removeItem(storageKeys.CURRENT_USER);
+        localStorage.removeItem(storageKeys.AUTH_TOKEN);
         resolve()
     })
+}
+
+export function isLoggedIn() {
+    const currentUser = localStorage.getItem(storageKeys.CURRENT_USER);
+    const authToken = localStorage.getItem(storageKeys.AUTH_TOKEN);
+    console.log(currentUser && authToken);
+    return currentUser && authToken;
 }
 

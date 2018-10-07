@@ -1,11 +1,13 @@
 import React from 'react';
-import {BrowserRouter, Route} from 'react-router-dom'
+import {BrowserRouter, Route, Redirect} from 'react-router-dom'
 import Landing from './layout/LandingComponent';
 import Login from './auth/LoginComponent';
 import Navbar from './layout/Navbar'
 import {Grid} from 'react-bootstrap';
 import {customColors} from "../utility/colors";
 import Paper from '@material-ui/core/Paper';
+import {isLoggedIn} from "../services/auth-service";
+
 
 const router = () => {
     return (
@@ -13,7 +15,13 @@ const router = () => {
             <div>
                 <Navbar/>
                 <Grid style={{marginTop: 148}}>
-                    <Route exact path="/" component={Landing}/>
+                    <Route exact path="/" render={() => {
+                        if (!isLoggedIn()) {
+                            return <Redirect to="/login"/>
+                        } else {
+                            return <Landing/>
+                        }
+                    }}/>
                     <Route exact path="/login" component={Login}/>
                 </Grid>
                 <Paper
@@ -22,10 +30,10 @@ const router = () => {
                     <div
                         id="timer-container"
                         style={{
-                            fontSize: 24,
+                            fontSize: 20,
                             color: customColors.black
                         }}>
-                        Loading...
+                        Please login.
                     </div>
                 </Paper>
             </div>

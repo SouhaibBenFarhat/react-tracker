@@ -3,6 +3,8 @@
     const frequency = 1000;
     const startDate = new Date();
     const currentScript = document.querySelector('script[script-id="trackme"]');
+    const loginPagePath = currentScript.getAttribute('login-page-path');
+    const startAfterLogin = currentScript.getAttribute('start-after-login');
     const host = currentScript.getAttribute('host');
     const endpoint = currentScript.getAttribute('endpoint');
     const containerId = currentScript.getAttribute('container-id');
@@ -11,8 +13,6 @@
 
     const getTimeDifference = (currentTime) => {
         const res = Math.abs(currentTime - startDate) / 1000;
-        const days = Math.floor(res / 86400);
-        const hours = Math.floor(res / 3600) % 24;
         const minutes = Math.floor(res / 60) % 60;
         const seconds = res % 60;
         return durationFormatter(minutes, seconds);
@@ -30,6 +30,7 @@
         }
         return minutes + ':' + seconds;
     };
+
     const append = () => {
         const container = document.getElementById(containerId);
         if (container) {
@@ -37,13 +38,25 @@
         }
     };
 
-
     const init = () => {
-        const data = {site: window.location, path: window.location.pathname};
-        $.post(host + endpoint, JSON.stringify(data))
+        const user_hash = localStorage.getItem('user_hash') ? localStorage.getItem('user_hash') : null;
+        const data = user_hash ?
+            {
+                site: window.location.origin,
+                path: window.location.pathname,
+                user_hash: user_hash
+            } :
+            {
+                site: window.location.origin,
+                path: window.location.pathname
+            };
+
+        $.post(host + endpoint, data)
             .done((response) => {
                 sessionHash = response.session_hash;
-                sessionStorage.setItem('user_hash', response.user_hash);
+                if (!user_hash) {
+                    localStorage.setItem('user_hash', response.user_hash);
+                }
                 configureWatcher();
             })
             .fail((xhr, status, error) => {
@@ -53,13 +66,30 @@
             });
     };
 
+    const ping = () => {
+        $.post(host + '/visit/ping', {session_hash: sessionHash})
+            .done((response) => {
+
+            })
+            .fail((xhr, status, error) => {
+                console.error(xhr);
+                console.error(status);
+                console.error(error);
+            });
+    };
 
     const configureWatcher = () => {
         watcher = setInterval(() => {
-            if (window.location.pathname !== "/login") {
+            if (startAfterLogin === "true") {
+                if (window.location.pathname !== loginPagePath) {
+                    append();
+                    ping();
+                }
+            } else {
                 append();
+                ping();
             }
-            console.log(new Date());
+
         }, frequency)
     };
 
@@ -68,6 +98,7 @@
     };
 
     const startTimer = () => {
+        init();
     };
 
     const endTimer = () => {
@@ -80,7 +111,6 @@
 
     window.onload = startTimer;
     window.onbeforeunload = endTimer;
-    init();
 })();
 
 
