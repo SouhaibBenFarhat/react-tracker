@@ -67,15 +67,17 @@
     };
 
     const ping = () => {
-        $.post(host + '/visit/ping', {session_hash: sessionHash})
-            .done((response) => {
+        if (document.hasFocus()) {
+            $.post(host + '/visit/ping', {session_hash: sessionHash})
+                .done((response) => {
 
-            })
-            .fail((xhr, status, error) => {
-                console.error(xhr);
-                console.error(status);
-                console.error(error);
-            });
+                })
+                .fail((xhr, status, error) => {
+                    console.error(xhr);
+                    console.error(status);
+                    console.error(error);
+                });
+        }
     };
 
     const configureWatcher = () => {
