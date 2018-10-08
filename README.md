@@ -64,7 +64,7 @@ react-tracker/
         host="http://localhost:4000"  <==== server url
         endpoint="/visit/init" <=== endpoint to init the session
         script-id="trackme" <=== script id
-        container-id="timer-container" <=== html element id where you want to show to elpased time.
+        container-id="timer-container" <=== html element id where you want to show the elpased time.
 </script>
         
 ````
