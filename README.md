@@ -58,6 +58,14 @@ react-tracker/
 ### Time tracker library:
 [tracker.js](/public/scripts/tracker.js) the library is included into the  [index.html](/public/index.html)
 
+```Please make sure to include JQuery in your webpage```
+
+```html
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+```
+
 ````html
 <script type="text/javascript"
         src="./scripts/tracker.js"
