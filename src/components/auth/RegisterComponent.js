@@ -66,11 +66,9 @@ class LoginComponent extends Component {
         if (this.validateForm()) {
             this.setState({loading: true});
             register(this.state.username, this.state.password).then(() => {
-                this.setState({loading: false}, () => {
-                    // this.props.history.replace('/login');
-                    window.location.href = '/login';
-
-                });
+                // this.props.history.replace('/login');
+                // i'm using hard redirection instead of using react router to make the tracker.js script aware of page changes.
+                window.location.href = '/login';
             }).catch(() => {
                 this.setState({loading: false, error: true});
             })

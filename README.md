@@ -63,11 +63,8 @@ react-tracker/
         src="./scripts/tracker.js"
         host="http://localhost:4000"  <==== server url
         endpoint="/visit/init" <=== endpoint to init the session
-        start-after-login="true" <=== if true the libraby start tracking once the user is logged in
-        login-page-path="/login" <=== login page url 
         script-id="trackme" <=== script id
         container-id="timer-container" <=== html element id where you want to show to elpased time.
-        >
 </script>
         
 ````
@@ -76,7 +73,6 @@ react-tracker/
 ### Check list:
 
 * [x] The time should only be tracked, if the user is actively browsing the site. If he is out of focus, in a different tab,the time should not be counted
-* [ ] in idle state the time should not be counted,
 * [x] The time tracked should be accurately and performantly send to the backend and saved in a database
 * [x] You can use any javascript framework and/or vanilla javascript
 * [x] The websites the users are browsing are not important. Use an existing template or create a simple web app you like
@@ -85,3 +81,11 @@ react-tracker/
 * [x] Do not simply copy existing solutions, I know them :)
 * [x] Do it by yourself
 
+
+### ScreenShots
+Login Page<br>
+![Login page](screen-shots/LoginPage.png)<br><br>
+Register Page<br>
+![Login page](screen-shots/RegisterPage.png)<br><br>
+Login Page<br>
+![Login page](screen-shots/LandingPage.png)<br><br>
