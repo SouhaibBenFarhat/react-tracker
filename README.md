@@ -87,5 +87,5 @@ Login Page<br>
 ![Login page](screen-shots/LoginPage.png)<br><br>
 Register Page<br>
 ![Login page](screen-shots/RegisterPage.png)<br><br>
-Login Page<br>
+Landing Page<br>
 ![Login page](screen-shots/LandingPage.png)<br><br>
